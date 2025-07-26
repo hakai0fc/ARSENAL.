@@ -1,0 +1,163 @@
+-- Load Orion Library
+local OrionLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/hakaiofc/Base/main/HUBORION'))()
+
+-- ANTI AFK
+pcall(function()
+    local VirtualUser = game:service'VirtualUser'
+    game:service'Players'.LocalPlayer.Idled:connect(function()
+        VirtualUser:CaptureController()
+        VirtualUser:ClickButton2(Vector2.new())
+    end)
+end)
+
+-- GLOBALS
+local LP = game.Players.LocalPlayer
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+_G.AutoDP = false
+_G.AutoStamina = false
+_G.AutoDumbell = false
+
+-- Função AutoPushUp ()
+function AutoPushUp()
+    local lutero = ReplicatedStorage:FindFirstChild("Lutero")
+    if not lutero then return end
+    local args = {"GiveHealthCuzPro", 2, 1}
+
+    local function executePushUp()
+        while _G.AutoDP do
+            for i = 1, 1 do
+                lutero:FireServer(unpack(args))
+                task.wait(0.00000049)
+            end
+        end
+    end
+
+    for i = 1, 1.1 do
+        task.spawn(executePushUp)
+    end
+end
+
+--Função AutoStamina
+function AutoStamina()
+    local staminaEvent = ReplicatedStorage:FindFirstChild("AddStaminaEvent")
+    if not staminaEvent then return end
+    local function executeStamina()
+        while _G.AutoStamina do
+            for i = 1, 12 do 
+                staminaEvent:FireServer()
+                staminaEvent:FireServer()
+                staminaEvent:FireServer()
+                staminaEvent:FireServer()
+                staminaEvent:FireServer()
+                staminaEvent:FireServer()
+                staminaEvent:FireServer()
+                staminaEvent:FireServer()
+                task.wait(0.000049)
+            end
+        end
+    end
+    for i = 1, 14 do
+        task.spawn(executeStamina)
+    end
+end
+
+-- Função AutoDumbell ()
+function AutoDumbell()
+    local LP = game.Players.LocalPlayer
+    local Backpack = LP:WaitForChild("Backpack")
+    local Character = LP.Character or LP.CharacterAdded:Wait()
+    local function executeDumbell()
+        while _G.AutoDumbell do
+            local dumbells = {}
+            for _, container in ipairs({Character, Backpack}) do
+                for _, tool in ipairs(container:GetChildren()) do
+                    if tool:IsA("Tool") and tool.Name == "Dumbell" then
+                        table.insert(dumbells, tool)
+                    end
+                end
+            end
+            for _, dumbell in ipairs(dumbells) do
+                local event = dumbell:FindFirstChildWhichIsA("RemoteEvent")
+                if event then
+                    for i = 1, 2 do
+                        event:FireServer()
+                        event:FireServer()
+                    end
+                end
+            end
+            task.wait(0.0000000000049)
+        end
+    end
+    for i = 1, 2 do
+        task.spawn(executeDumbell)
+    end
+end
+
+-- Criando Interface
+local Window = OrionLib:MakeWindow({
+    Name = "Arsenal HUB",
+    HidePremium = false,
+    SaveConfig = true,
+    ConfigFolder = "OrionTest",
+    IntroEnabled = false
+})
+
+local HubExclusivoTab = Window:MakeTab({
+    Name = "Menu Exclusivo",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+
+HubExclusivoTab:AddSection({ Name = "Auto-Farm" })
+
+HubExclusivoTab:AddButton({
+    Name = "Reset Por Click",
+    Callback = function()
+        local humanoid = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+        if humanoid then
+            humanoid.Health = 0  -- Matar o personagem para forçar o respawn
+        end
+    end
+})
+HubExclusivoTab:AddToggle({
+    Name = "Auto PushUp",
+    Default = false,
+    Callback = function(Value)
+        _G.AutoDP = Value
+        if Value then AutoPushUp() end
+    end
+})
+
+HubExclusivoTab:AddToggle({
+    Name = "Auto Stamina",
+    Default = false,
+    Callback = function(Value)
+        _G.AutoStamina = Value
+        if Value then AutoStamina() end
+    end
+})
+
+HubExclusivoTab:AddToggle({
+    Name = "Auto Dumbell",
+    Default = false,
+    Callback = function(Value)
+        _G.AutoDumbell = Value
+        if Value then AutoDumbell() end
+    end
+})
+
+local InfiniteYieldTab = Window:MakeTab({
+    Name = "FUNÇÕES A+",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+
+InfiniteYieldTab:AddSection({ Name = "FUNÇÕES ADICIONAIS" })
+
+InfiniteYieldTab:AddButton({
+    Name = "InfiniteYield",
+    Callback = function()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/hakai0fc/EdgeIY/refs/heads/main/infiniteyield'))()
+    end
+})
