@@ -116,7 +116,7 @@ HubExclusivoTab:AddButton({
     Callback = function()
         local humanoid = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
         if humanoid then
-            humanoid.Health = 0  -- Matar o personagem para forçar o respawn
+            humanoid.Health = 0  
         end
     end
 })
@@ -125,7 +125,7 @@ HubExclusivoTab:AddToggle({
     Default = false,
     Callback = function(Value)
         _G.AutoDP = Value
-        if Value then AutoPushUp() end
+        if Value then AutoPushUp(0.1) end
     end
 })
 
@@ -134,7 +134,7 @@ HubExclusivoTab:AddToggle({
     Default = false,
     Callback = function(Value)
         _G.AutoStamina = Value
-        if Value then AutoStamina() end
+        if Value then AutoStamina(0.1) end
     end
 })
 
@@ -143,7 +143,7 @@ HubExclusivoTab:AddToggle({
     Default = false,
     Callback = function(Value)
         _G.AutoDumbell = Value
-        if Value then AutoDumbell() end
+        if Value then AutoDumbell(0.1) end
     end
 })
 
